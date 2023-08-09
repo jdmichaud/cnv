@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - main
+      - master
 jobs:
   build:
     strategy:
@@ -21,11 +21,11 @@ jobs:
         version: master
 
     - name: Build
-      run: zig build -Doptimize=ReleaseSafe -Dtarget=${{ matrix.target }}
+      run: zig build -Doptimize=ReleaseSmall -Dtarget=${{ matrix.target }}
 
     - name: Archive executable
       uses: actions/upload-artifact@v3
       with:
-        name: cnv
+        name: cnv-${{ matrix.target }}
         path: zig-out/bin/*
 
