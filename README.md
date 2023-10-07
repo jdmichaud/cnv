@@ -20,3 +20,8 @@ zig build
 
 `cnv` will be built in `zig-out/bin/cnv`
 
+## Create a release
+
+Update CHANGELOG.md with the version, put the tag on the master branch and push it.
+A release will be automatically created.
+
