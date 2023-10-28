@@ -60,7 +60,7 @@ pub fn main() !void {
     result.decimal,
     result.hexadecimal,
     result.binary,
-    result.binary.len,
+    result.binary.len - 2,
   });
   // We don't deallocate result and that's fine...
 }
