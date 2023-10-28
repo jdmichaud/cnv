@@ -3,11 +3,11 @@
 Converts numbers in the command line.
 ```bash
 $ cnv 123
-123 0x7b 0b1111011 (9 bits)
+123 0x7b 0b1111011 (7 bits)
 $ cnv 0xDEADBEEF
 3735928559 0xdeadbeef 0b11011110101011011011111011101111 (34 bits)
 $ cnv 0b10101010
-170 0xaa 0b10101010 (10 bits)
+170 0xaa 0b10101010 (8 bits)
 ```
 
 # Build cnv
