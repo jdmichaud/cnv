@@ -8,6 +8,7 @@ const Conversion = struct {
   decimal: []const u8,
   hexadecimal: []const u8,
   binary: []const u8,
+  float32: []const u8,
 }; 
   
 pub fn convert(allocator: std.mem.Allocator, value: []const u8) !Conversion {
@@ -25,10 +26,15 @@ pub fn convert(allocator: std.mem.Allocator, value: []const u8) !Conversion {
   errdefer allocator.free(binary);
   const sbinary = try std.fmt.bufPrint(binary, "0b{b}", .{ number });
    
+  const float32: []u8 = try allocator.alloc(u8, 130);
+  errdefer allocator.free(float32);
+  const sfloat = try std.fmt.bufPrint(float32, "{d}f32", .{ @as(f32, @bitCast(@as(u32, @intCast(number)))) });
+
   return .{
    .decimal = sdecimal,
    .hexadecimal = shexadecimal,
    .binary = sbinary,
+   .float32 = sfloat,
   };
 }  
   
@@ -56,11 +62,12 @@ pub fn main() !void {
     println("error: invalid argument {s}", .{ args[1] });
     std.posix.exit(1);
   };
-  println("{s} {s} {s} ({} bits)", .{
+  println("{s} {s} {s} ({} bits) {s}", .{
     result.decimal,
     result.hexadecimal,
     result.binary,
     result.binary.len - 2,
+    result.float32,
   });
   // We don't deallocate result and that's fine...
 }
