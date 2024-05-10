@@ -11,19 +11,19 @@ const Conversion = struct {
 }; 
   
 pub fn convert(allocator: std.mem.Allocator, value: []const u8) !Conversion {
-  var number = try std.fmt.parseInt(i128, value, 0);
+  const number = try std.fmt.parseInt(i128, value, 0);
   // We could allocate a little bit less but that's fine.
-  var decimal: []u8 = try allocator.alloc(u8, 130);
+  const decimal: []u8 = try allocator.alloc(u8, 130);
   errdefer allocator.free(decimal);
-  var sdecimal = try std.fmt.bufPrint(decimal, "{}", .{ number });
+  const sdecimal = try std.fmt.bufPrint(decimal, "{}", .{ number });
   
-  var hexadecimal: []u8 = try allocator.alloc(u8, 130);
+  const hexadecimal: []u8 = try allocator.alloc(u8, 130);
   errdefer allocator.free(hexadecimal);
-  var shexadecimal = try std.fmt.bufPrint(hexadecimal, "0x{x}", .{ number });
+  const shexadecimal = try std.fmt.bufPrint(hexadecimal, "0x{x}", .{ number });
   
-  var binary: []u8 = try allocator.alloc(u8, 130);
+  const binary: []u8 = try allocator.alloc(u8, 130);
   errdefer allocator.free(binary);
-  var sbinary = try std.fmt.bufPrint(binary, "0b{b}", .{ number });
+  const sbinary = try std.fmt.bufPrint(binary, "0b{b}", .{ number });
    
   return .{
    .decimal = sdecimal,
@@ -54,7 +54,7 @@ pub fn main() !void {
 
   const result = convert(allocator, args[1]) catch {
     println("error: invalid argument {s}", .{ args[1] });
-    std.os.exit(1);
+    std.posix.exit(1);
   };
   println("{s} {s} {s} ({} bits)", .{
     result.decimal,
